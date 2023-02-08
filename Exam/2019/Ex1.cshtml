@@ -1,0 +1,63 @@
+﻿@{
+    var message = "";
+    var messageTemp = "";
+    var messageDegre = "";
+    string[] radioChecked = { "", "" };
+
+
+    if (IsPost)
+    {
+        if (!@Request["degre"].IsEmpty() && !@Request["temperature"].IsEmpty() && @Request["temperature"].IsFloat())
+        {
+            float temp = @Request["temperature"].AsFloat();
+
+            float result = 0;
+
+            if (@Request["degre"] == "celsius")
+            {
+                radioChecked[1] = "checked";
+                result = (9 / 5) * temp + 32;
+                message = "La température T = " + temp + " degré Celsius correspond à F = " + result + "degrés Fahrenheit";
+            }
+
+            if (@Request["degre"] == "fahrenheit")
+            {
+                radioChecked[2] = "checked";
+                result = (5 / 9) * (temp - 32);
+                message = "La température F = " + temp + " degré Fahrenheit correspond à T = " + result + "degrés Celsius";
+            }
+        }
+        else
+        {
+            if (@Request["temperature"].IsEmpty())
+            {
+                messageTemp = "Veuillez introduire la température";
+            }
+            if (!@Request["temperature"].IsFloat())
+            {
+                messageTemp = "La valeur de la température introduie n est pas valide";
+            }
+            if (@Request["degre"].IsEmpty())
+            {
+                messageDegre = "Veuillez introduire la degré";
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examen2019 Ex1</title>
+</head>
+<body>
+    <form method="post">
+        <p>Temperature : <input type="text" name="temperature" value="@Request["temperature"]" /></p>
+        <p>en degré celsius : <input type="radio" name="degre" value="celcius" @radioChecked[1] /></p>
+        <p>en degré Fahrenheit<input type="radio" name="degre" value="fahrenheit" @radioChecked[2] /></p>
+        <input type="submit" value="convertir" />
+    </form>
+    <h3 style="color:red">@message</h3>
+    <h3 style="color:red">@messageTemp</h3>
+    <h3 style="color:red">@messageDegre</h3>
+</body>
+</html>

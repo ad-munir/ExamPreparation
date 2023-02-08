@@ -1,0 +1,25 @@
+﻿@{  
+    var path = "~/Images/photo1.jpg";
+
+    if (IsPost)
+    {
+        for (int i = 2; i < 7; i++)
+        {
+            path = "~/Images/photo" + (i) + ".jpg";
+        }
+    }
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ex2</title>
+</head>
+<body>
+    <form method="post">
+        <input type="submit" name="photo" value="<" />
+        <img src="@Href(path)" alt="@path" />
+        <input type="submit" name="photo" value=">" />
+    </form>
+</body>
+</html>

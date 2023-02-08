@@ -1,0 +1,51 @@
+﻿@{
+    // Fichier de script d'action qui servira à traiter le formulaire : action.cshtml.
+    var messNom = "";
+    var messAge = "";
+    var message = "";
+    if(IsPost) 
+    {
+        if(Request["nom"] != "" && Request["age"] != "")
+        {
+            // On vérifie que l'âge fourni est numérique et qu’il est positif ou nul.
+            if(Request["age"].IsInt() && Request["age"].AsInt() >= 0)
+            {
+                messNom = "Bonjour, " + Request["nom"];
+                messAge = "Vous avez " + Request["age"] + " ans";
+            }
+            else
+            {
+                message = "L'age " + Request["age"] + " que vous avez fourni n'est pas correcte!";
+                string qs = "nom=" + Request["nom"] + "&age=" + Request["age"];
+                qs += "&message= " + message;
+                Response.Redirect("form.cshtml?" + qs); // Affiche le formulaire.
+            }
+        }
+        else
+        {
+            message = "Vous devez remplir le formulaire.";
+            string qs = "nom=" + Request["nom"] + "&age=" + Request["age"];
+            qs += "&message= " + message;
+            Response.Redirect("form.cshtml?" + qs); // Affiche le formulaire.
+        }
+    }}
+<!DOCTYPE html>
+<html lang="fr"><head>
+    <meta charset="utf-8" />
+    <title>Script d'action de traitement de formulaire</title></head>
+<body>
+    <p>@Request.Form[0]</p>
+    <p>@Request.Form[1]</p>
+    <p>@Request.Form["nom"]</p>
+    <p>@Request.Form["age"]</p>
+    ---------------------------------
+    <p>@Request.QueryString[0]</p>
+    <p>@Request.QueryString[1]</p>
+    <p>@Request.QueryString["nom"]</p>
+    <p>@Request.QueryString["age"]</p>
+    ---------------------------------
+    <p>@messNom</p>
+    <p>@messAge</p>
+</body></html>
+
+<!--Nom du fichier de script : form.cshtml. -->

@@ -1,0 +1,153 @@
+﻿@using System.Collections;
+@using System.Data.SqlClient;
+@{ 
+    var db = WebMatrix.Data.Database.Open("Examen2019");
+
+    var selectQuery = "SELECT * FROM Etudiants";
+
+    var data = db.Query(selectQuery);
+
+    int count = data.Count();
+
+
+    string[] CNE = new string[count];
+    string[] N = new string[count];
+    double[] M = new double[count];
+    double[] I = new double[count];
+
+
+    int k = 0;
+    foreach (var row in data)
+    {
+        while (k < count)
+        {
+            CNE[k] = row.CNE;
+            N[k] = row.Nom;
+            M[k] = row.Mathématiques;
+            I[k] = row.Informatique;
+            k++;
+            break;
+        }
+    }
+   
+    double[] Moy = new double[count];
+    string[] Mention = new string[count];
+
+
+
+    for (int i = 0; i < M.Length; ++i)
+    {
+        Moy[i] = (M[i] + I[i]) / 2;
+
+        if (Moy[i] < 10)
+        {
+            Mention[i] = "Ajourné";
+        }
+        else if (Moy[i] >= 10 && Moy[i] < 12)
+        {
+            Mention[i] = "Passable";
+        }
+        else if (Moy[i] >= 12 && Moy[i] < 14)
+        {
+            Mention[i] = "Assez bien";
+        }
+        else if (Moy[i] >= 14 && Moy[i] < 16)
+        {
+            Mention[i] = "Bien";
+        }
+        else
+        {
+            Mention[i] = "Très bien";
+        }
+    }
+
+    double somme = 0;
+
+    double MoyMin = Moy[0];
+    double MoyMax = Moy[0];
+
+    for (int i = 0; i < M.Length; ++i)
+    {
+        //calcul de : moy minimale & moy maximale & la somme des moyennes
+
+        if (Moy[i] < MoyMin)
+        {
+            MoyMin = Moy[i];
+        }
+
+        if (Moy[i] > MoyMax)
+        {
+            MoyMax = Moy[i];
+        }
+
+        somme += Moy[i];
+    }
+    double MoyGen = somme / Moy.Length;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examen2019 Ex2</title>
+    <style>
+        table {
+            border: solid 1px;
+        }
+
+        td, th {
+            border-top: solid 1px;
+            border-left: solid 1px;
+        }
+
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Résultat de la délibération de l'examen</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>CNE</th>
+                <th>Nom</th>
+                <th>Mathématiques</th>
+                <th>Informatiques</th>
+                <th>Moyenne</th>
+                <th>Mention</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < count; ++i)
+            {
+                <tr>
+                    <td>@CNE[i]</td>
+                    <td>@N[i]</td>
+                    <td>@M[i]</td>
+                    <td>@I[i]</td>
+                    <td>@Moy[i]</td>
+                    <td>@Mention[i]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h1>Statistique</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Moyenne minimale</th>
+                <th>Moyenne maximale</th>
+                <th>Moyenne générale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@MoyMin</td>
+                <td>@MoyMax</td>
+                <td>@MoyGen</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

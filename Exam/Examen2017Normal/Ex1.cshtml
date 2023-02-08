@@ -1,0 +1,90 @@
+﻿@{
+    var IMC = "";
+    var Inter = "";
+
+    var poids = "";
+    var taille = "";
+
+    var messageT = "";
+    var messageP = "";
+
+    if (IsPost)
+    {
+        poids = Request["poids"];
+        taille = Request["taille"];
+
+        float p, t, res;
+        t = taille.AsFloat();
+        p = poids.AsFloat();
+
+        if (poids.IsFloat() && p> 0 && taille.IsFloat() && t> 0)
+        {
+
+            res = p / (t*t);
+
+            IMC = "votre IMC est : " + res;
+
+            if(res < 18.5)
+            {
+                Inter = "Maigreur ...";
+            }
+            else if(res >= 18.5 && res < 25){
+                Inter = "Normal ...";
+            }
+            else if(res >= 25 && res < 40)
+            {
+                Inter = "Surpoids ...";
+            }
+            else
+            {
+                Inter = "Obésité ...";
+            }
+        }
+        else
+        {
+            if(p <= 0)
+            {
+                messageP = "le poids doit etre supérieur à 0.";
+            }
+            if (!Request["poids"].IsFloat())
+            {
+                messageP = "La valeur saisie dans le champ poids n'est pas un nombre réel valide!!";
+            }
+
+            if (t <= 0)
+            {
+                messageT = "la taille doit etre supérieure à 0.";
+            }
+            if (!Request["taille"].IsFloat())
+            {
+                messageT = "La valeur saisie dans le champ taille n'est pas un nombre réel valide!!";
+            }
+        }
+        <h6>p= @p ; t=@t </h6>
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examen2017N Ex1</title>
+</head>
+<body>
+    <h3>Evaluer votre santé</h3>
+    <fieldset style="width:300px">
+        <legend>Calcul de l'IMC</legend>
+        <form method="post">
+            Poids(kg) : <br />
+            <input type="text" name="poids" value="@Request["poids"]" />
+            <br />
+            Taille(m) : <br />
+            <input type="text" name="taille" value="@Request["taille"]" />
+            <br />
+            <input type="submit" value="Evaluer" />
+        </form>
+    </fieldset>
+    <p>@IMC</p>
+    <p>@Inter</p>
+    <p>@messageP</p>
+    <p>@messageT</p>
+</body>
+</html>

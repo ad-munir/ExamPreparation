@@ -1,0 +1,140 @@
+﻿@{ 
+    DateTime date = new DateTime();
+    DateTime date1 = new DateTime(2000, 12, 23);
+    DateTime date2 = new DateTime(2001, 6, 21, 11, 33, 56);
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Serie2 Ex1</title>
+
+    <style>
+        table, th, td {
+            border: solid 1px #bbbbbb;
+            border-collapse: collapse;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>con() par defaut: @date</h3>
+    <h3>con(Y,M,D)      : @date1</h3>
+    <h3>con(Y,M,D,h,m,s): @date2</h3>
+    <ul>
+        <li>Y = @date2.Year</li>
+        <li>M = @date2.Month</li>
+        <li>D = @date2.Day - @date2.DayOfWeek - @date2.DayOfYear</li>
+        <li>h = @date2.Hour</li>
+        <li>m = @date2.Minute</li>
+        <li>s = @date2.Second</li>
+    </ul>
+    <h3>Now : @DateTime.Now</h3>
+    <h3>Today : @DateTime.Today</h3>
+    <h6>------------------------------------------</h6>
+    @{
+        var today = DateTime.Today;
+    }
+    <h3>Today : @today @today.DayOfWeek</h3>
+    <h3>Today+3 : @today.AddDays(3) @today.AddDays(3).DayOfWeek</h3>
+    <h6>------------------------------------------</h6>
+    <h3>date     :@date2 - @date.DayOfWeek</h3>
+    <h3>date+24h :@date2.AddHours(24) - @date.AddHours(24).DayOfWeek</h3>
+
+    <h6>------------------------------------------</h6>
+    <h6>------------------------------------------</h6>
+    @{
+        var now = DateTime.Now;
+    }
+    <h3>date    :@date2 - @date2.DayOfWeek</h3>
+    <h3>now     :@now - @now.DayOfWeek</h3>
+    <h3>Compare(now, date)    : @DateTime.Compare(now, date2)</h3>
+    <h3>Compare(date, now)    : @DateTime.Compare(date2, now)</h3>
+    <h3>Compare(now, now)    : @DateTime.Compare(now, now)</h3>
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+    <h3>date.CompareTo(now)    : @date.CompareTo(now)</h3>
+    <h3>now.CompareTo(date)    : @now.CompareTo(date2)</h3>
+    <h3>now.CompareTo(now)    : @now.CompareTo(now)</h3>
+    <h3>date.CompareTo(date)    : @date2.CompareTo(date2)</h3>
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+    <h4>now.Equals(date) : @now.Equals(date2)</h4>
+    <h4>date.Equals(now) : @date2.Equals(now)</h4>
+    <h4>date.Equals(date) : @date2.Equals(date2)</h4>
+    <h4>now.Equals(now)   : @now.Equals(now)</h4>
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+    <h4> DaysInMonth(y1945, m7)  : @DateTime.DaysInMonth(1945, 7)</h4>
+    <h4> DaysInMonth(y2023, m2)  : @DateTime.DaysInMonth(2023, 2)</h4>
+    <h4> DaysInMonth(y2020, m2)  : @DateTime.DaysInMonth(2020, 2)</h4>
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+    @{
+        var parse = DateTime.Parse("30/11/1954");
+        var parse1 = DateTime.Parse("30/11/1954 12:45:59");
+    }
+    <h4>DateTime.Parse("@parse.Day/@parse.Month/@parse.Year"): @parse</h4>
+    <h4>DateTime.Parse("@parse1.Day/@parse1.Month/@parse1.Year @parse1.Hour:@parse1.Minute:@parse1.Second")): @parse1</h4>
+
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+    <h3>now     :@now - @now.DayOfWeek</h3>
+    <h3>now.ToString     :@now.ToString()</h3>
+    <h3>now.ToShortDateString     :@now.ToShortDateString()</h3>
+    <h3>now.ToLongDateString     :@now.ToLongDateString()</h3>
+    <h3>now.ToShortTimeString     :@now.ToShortTimeString()</h3>
+    <h3>now.ToLongTimeString     :@now.ToLongTimeString()</h3>
+
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+    <h3>now     :@now</h3>
+    <h3>now.ToString     :@now.ToString()</h3>
+    <h3>now.ToString("dddd")     :@now.ToString("dddd")</h3>
+    <h3>now.ToString("ddd")      :@now.ToString("ddd")</h3>
+    <h3>now.ToString("dd")       :@now.ToString("dd")</h3>
+    <h3>now.ToString("MMMM")     :@now.ToString("MMMM")</h3>
+    <h3>now.ToString("MMM")      :@now.ToString("MMM")</h3>
+    <h3>now.ToString("MM")       :@now.ToString("MM")</h3>
+    <h3>now.ToString("yyyy")       :@now.ToString("yyyy")</h3>
+    <h3>now.ToString("yyy")       :@now.ToString("yyy")</h3>
+    <h3>now.ToString("yy")       :@now.ToString("yy")</h3>
+    <h3>now.ToString("HH")       :@now.ToString("HH")</h3>
+    <h3>now.ToString("hh")       :@now.ToString("hh")</h3>
+    <h3>now.ToString("mm")       :@now.ToString("mm")</h3>
+    <h3>now.ToString("ss")       :@now.ToString("ss")</h3>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Year</td>
+                <td>@now.Year</td>
+            </tr>
+            <tr>
+                <td>Mounth</td>
+                <td>@now.Month  (@now.ToString("MMMM"))</td>
+            </tr>
+            <tr>
+                <td>Day</td>
+                <td>@now.Day  @now.ToString("dddd")</td>
+            </tr>
+            <tr>
+                <td>Hour</td>
+                <td>@now.Hour  (@now.ToString("hh")PM)</td>
+            </tr>
+            <tr>
+                <td>Minuts</td>
+                <td>@now.Minute</td>
+            </tr>
+            <tr>
+                <td>Seconds</td>
+                <td>@now.Second</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+

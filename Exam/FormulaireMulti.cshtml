@@ -1,0 +1,47 @@
+﻿@{ 
+    string[] sports = null;
+    var message = "";
+
+    if (IsPost)
+    {
+        if (Request["sport"] != null)
+        {
+            sports = Request["sport"].Split(';');
+        }
+        else
+        {
+            message = "Veuilez choisir votre sport preferée";
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>cours</title>
+</head>
+<body>
+    <form action="" method="post">
+        <!—Le script d'action correspond à la page elle-même. -->
+        <p>Quels sports aimez-vous pratiquer ?</p>
+        <input type="checkbox" name="sport" value="Tennis" />Tennis<br />
+        <input type="checkbox" name="sport" value="Foot ball" />Foot ball<br />
+        <input type="checkbox" name="sport" value="Natation" />Natation<br />
+        <p><input type="submit" value="Envoyer"></p>
+    </form>
+
+
+    @if (sports != null)
+    {
+        <p>vous avez choisi :</p>
+        foreach (var sp in sports)
+        {
+            <p>@sp</p>
+        }
+    }
+    else
+    {
+        <p>@message</p>
+    }
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@{ 
+    var somme = 0;
+    var resultat = "";
+    var message1 = "";
+    var message2 = "";
+    if (IsPost)
+    {
+        var n1 = Request["texte1"];
+        var n2 = Request["texte2"];
+        if (n1.IsInt() && n2.IsInt())
+        {
+            somme = n1.AsInt() + n2.AsInt();
+            resultat = "Somme = " + somme;
+        }
+        else
+        {
+            if (!n1.IsInt()){
+                message1 = "La valeur saisie dans le champ Premier nombre n'est pas un nombre!";
+            }
+
+            if (!n2.IsInt())
+            {
+                message2 = "La valeur saisie dans le champ Deuxième nombre n'est pas un nombre!";
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            background-color: beige;
+            font-family: Verdana, Arial;
+            margin: 50px;
+        }
+
+        form {
+            padding: 10px;
+            border-style: solid;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <p>Entrez deux nombres entiers et cliquez sur le bouton <strong>Add</strong>.</p>
+    <form action="" method="post">
+        <!-- Le script d'action est la page elle-même. -->
+        <p>
+            Premier Nombre : <br /> <input type="text" name="texte1" />
+        </p>
+        <p>
+            Deuxième Nombre : <br /> <input type="text" name="texte2" />
+        </p>
+        <p> <input type="submit" value="Add" /></p>
+    </form>
+    <p>@resultat</p>
+    <p>@message1</p>
+    <p>@message2</p>
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿@{
+    var prixHT = "";
+    var prixHTTC = "";
+    var messagePrix = "";
+    var messageNombre = "";
+    var messageTva = "";
+
+    // Valeurs par défaut.
+    var prix = "";  // Valeur par défaut, un champ vide.
+    var nombre = "1";   // Valeur pas défaut du nombre de produit.
+    var tva = "0,18";   // Valeur pas défaut du taux de TVA.
+
+    if (IsPost)
+    {
+        prix = Request["prix"];
+        nombre = Request["nombre"];
+        tva = Request["tva"];
+
+        if (!Request["prix"].IsEmpty() && !Request["nombre"].IsEmpty() && !Request["tva"].IsEmpty())
+        {
+            prixHT = "Prix hors taxe : " + ( Request["prix"].AsFloat() * Request["nombre"].AsInt() );
+            prixHTTC = "Prix toute taxe comprise : " + ( Request["prix"].AsFloat() * Request["nombre"].AsInt() * (1+Request["tva"].AsFloat()) );
+
+        }
+        else
+        {
+            if (Request["prix"].IsEmpty())
+            {
+                messagePrix = "veuillez saisair le prix";
+            }
+
+            if (Request["nombre"].IsEmpty())
+            {
+                messageNombre = "veuillez saisair le nombre";
+            }
+
+            if (Request["tva"].IsEmpty())
+            {
+                messageTva = "veuillez saisair la tva";
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>serie2 Ex4</title>
+
+    <style type="text/css">
+        body {
+            background-color: beige;
+            font-family: Verdana, Arial;
+            margin: 50px;
+        }
+
+        form {
+            padding: 10px;
+            border-style: solid;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcul du prix d'achat hors taxe et toute taxe comprise</h1>
+
+    <form method="post">
+        <h3>Prix du produit :</h3>
+        <input type="text" name="prix" value="@Request["prix"]" />
+        <h3>Nombre de produit commandé :</h3>
+        <input type="text" name="nombre" value="@Request["nombre"]" />
+        <h3>TVA :</h3>
+        <input type="text" name="tva" value="@Request["tva"]" />
+        <br /><br />
+        <input type="submit" value="Prix" />
+    </form>
+
+    <p>@prixHT</p>
+    <p>@prixHTTC</p>
+    <p>@messagePrix</p>
+    <p>@messageNombre</p>
+    <p>@messageTva</p>
+</body>
+</html>

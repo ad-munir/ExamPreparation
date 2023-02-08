@@ -1,0 +1,81 @@
+﻿@{ 
+    var bd = WebMatrix.Data.Database.Open("Carnet");
+
+    
+
+    var insertQuery = "INSERT INTO Contacts (Nom,Prénom,Adresse,Email,Téléphone) VALUES (@0,@1,@2,@3,@4)";
+    try
+    {
+        //bd.Execute(insertQuery, "saad", "ben ali", "martil", "saad99@gmail.com", "0741011102");
+    }
+    catch (Exception e)
+    {
+    <h5 style="color:red">Erreur d'insertion du contacte : @e.Message</h5>
+    }
+    var data = bd.Query("SELECT * FROM Contacts");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manipulation d'une base de données SQL Server</title>
+    <style>
+        body{
+            background-color :beige;
+        }
+
+        table {
+            width: 800px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        th,td {
+            padding: 15px;
+            background-color: cornflowerblue;
+            color: #fff;
+        }
+
+        th {
+            background-color: #060e37;
+            text-align: left;
+            color: wheat;
+            border-bottom: solid #fff;
+            text-transform: capitalize;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nom</th>
+                <th>prénom</th>
+                <th>adresse</th>
+                <th>email</th>
+                <th>telephone</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var row in data)
+            {
+                <tr>
+                    <td>@row.Id</td>
+                    <td>@row.Nom</td>
+                    <td>@row.Prénom</td>
+                    <td>@row.Adresse</td>
+                    <td>@row.Email</td>
+                    <td>@row.Téléphone</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</body>
+</html>

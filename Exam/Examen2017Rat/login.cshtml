@@ -1,0 +1,65 @@
+﻿@{
+    var message = "";
+    var messageNom = "";
+    var messageMdp = "";
+
+    if (IsPost)
+    {
+        if (!Request["Nom"].IsEmpty() && !Request["MotDePasse"].IsEmpty() )
+        {
+
+            var db = WebMatrix.Data.Database.Open("Adherent");
+
+            var Nom = Request["Nom"];
+            var MotDePasse = Request["MotDePasse"];
+
+
+            var query1 = @"SELECT * FROM Compte WHERE Nom = @0";
+            var query2 = @"SELECT * FROM Compte WHERE Nom = @0 AND MotDePasse = @1";
+
+            var result1 = db.QuerySingle(query1, Nom);
+            var result2 = db.QuerySingle(query2, Nom, MotDePasse);
+
+
+            if (result1 == null)
+            {
+                messageNom = "Nom de compte utilisateur est incorrect";
+            }
+            else
+            {
+                if (result2 == null)
+                {
+                    messageMdp = "Mot de passe est incorrect";
+                }
+                else
+                {
+                    message = "succes";
+                    Response.Redirect("~/Examen2017/page.cshtml");
+                }
+            }
+        }
+        else
+        {
+            message = "Veuiller entrer tous les champs";
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <fieldset style="width:300px;">
+        <legend>Connexions d'adhérents</legend>
+        <form method="post" action="">
+            <p>Nom : <input type="text" name="Nom" /></p>
+            <p>@messageNom</p>
+            <p>Mot de passe : <input type="password" name="MotDePasse" /></p>
+            <p>@messageMdp</p>
+            <input type="submit" value="Connexion" />
+        </form>
+        <h4>@message</h4>
+    </fieldset>
+</body>
+</html>

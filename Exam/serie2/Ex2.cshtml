@@ -1,0 +1,23 @@
+﻿@{
+    var now = DateTime.Now;
+    //var now = new DateTime(2014, 12, 25, 11, 30, 15);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>serie2 Ex2</title>
+</head>
+<body>
+    <h3>Nous sommes le: @now.ToString("dd MMMM yyyy"), il est @now.ToString("HH:mm")</h3>
+    <h3>Nous sommes le: @now.ToString("dd/MM/yyyy"), il est @now.ToString("HH:mm:ss")</h3>
+    <h3>Nous sommes le: @now.ToString("dddd dd MMMM yyyy"), il est @now.ToString("HH:mm:ss")</h3>
+    <h3>Nous sommes le: @now.ToString("dddd dd MMMM yyyy', il est' HH:mm:ss")</h3>
+
+    <h6>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</h6>
+
+    <h3>Aujourd'hui       : @now.ToString("dd-MM-yyyy")</h3>
+    <h3>Semaine prochaine : @now.AddDays(7).ToString("dd-MM-yyyy")</h3>
+    <h3>Dans un mois      : @now.AddMonths(1).ToString("dd-MM-yyyy")</h3>
+    <h3>Dans une année    : @now.AddYears(1).ToString("dd-MM-yyyy")</h3>
+</body>
+</html>

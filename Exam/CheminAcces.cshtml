@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    @{
+        var mesImages = "~/Images";
+    }
+
+    <img src="@Href(mesImages)/photo5.jpg" title="Logo de la Facult&eacute; des Sciences de T&eacute;touan" />
+
+    <img src="~/Images/photo2.jpg" title="Logo de la Facult&eacute; des Sciences de T&eacute;touan" />
+    <!--Affiche le chemin physique de la page d'accueil Default.cshtml-->
+    <p>Le chemin physique de la page d'accueil est : @Server.MapPath("~/CheminAcces.cshtml")</p>
+    <!--Le chemin physique de la page d'accueil est : C:\Users\hp\OneDrive\Documents\asp.net web application\Exam\Exam\CheminAcces.cshtml-->
+
+
+    @{
+
+        /* Utilisation de la propriété Request de lapage sans la mentionner explicitement. */
+        var cheminVirtuel = Request.FilePath;
+        var cheminPhys = Request.PhysicalPath;
+        var pageUrl = Request.Url;
+    }
+
+    <p>Chemin virtuel de la page courante est : @cheminVirtuel</p>
+    <p> Chemin physique de la page courante est : @cheminPhys</p>
+    <p>L'URL de la page courante est : @pageUrl</p>
+
+</body>
+</html>

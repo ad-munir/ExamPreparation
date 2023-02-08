@@ -1,0 +1,78 @@
+﻿@{
+    var bd = WebMatrix.Data.Database.Open("Carnet");
+    var msgNom = "";
+    var msgPre = "";
+    var msgSQL = "";
+    if (IsPost)
+    {
+        var nom = Request["nom"];
+        var prenom = Request["prenom"];
+        var adresse = Request["adresse"];
+        var email = Request["email"];
+        var telephone = Request["telephone"];
+
+        if (!nom.IsEmpty() && !prenom.IsEmpty())
+        {
+            var insertQuery = "INSERT INTO Contacts (Nom,Prénom,Adresse,Email,Téléphone) VALUES (@0,@1,@2,@3,@4)";
+            try
+            {
+                bd.Execute(insertQuery, nom, prenom, adresse, email, telephone);
+                Response.Redirect("ManipulationBD-SQL-Server.cshtml");
+            }catch(Exception e)
+            {
+                msgSQL = "Erreur d'insertion du contacte : " + @e.Message;
+            }
+        }
+        else
+        {
+            if (nom.IsEmpty())
+            {
+                msgNom = "Veuillez entrer le nom";
+            }
+
+
+            if (prenom.IsEmpty())
+            {
+                msgPre = "Veuillez entrer le prenom";
+            }
+
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Contact</title>
+</head>
+<body>
+    <form method="post" action="" style="width: 30%">
+        <fieldset>
+            <legend>Ajout d'un nouveau contacte</legend>
+            <p>
+                Nom (*):<br />
+                <input type="text" size="30" maxlength="30" name="nom" value="@Request["nom"]" />
+            </p>
+            <p>
+                Prénom (*): <br />
+                <input type="text" size="30" maxlength="30" name="prenom" value="@Request["prenom"]" />
+            </p>
+            <p>
+                Adresse : <br />
+                <textarea rows="4" cols="50" name="adresse">@Request["adresse"]</textarea>
+            </p>
+            <p>
+                Email : <br />
+                <input type="text" size="30" maxlength="30" name="email" value="@Request["email"]" />
+            </p>
+            <p>
+                Téléphone : <br />
+                <input type="text" size="10" maxlength="10" name="telephone" value="@Request["telephone"]" />
+            </p>
+            <p><input type="submit" value="Add contact" /></p>
+        </fieldset>
+    </form>
+    <h5 style="color:red">@msgSQL</h5>
+    <h5 style="color:red">@msgNom</h5>
+    <h5 style="color:red">@msgPre</h5>
+</body>
+</html>

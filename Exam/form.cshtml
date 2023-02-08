@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="~/Formulaire2.cshtml"tabindex=" " method="post">
+        <p>Votre nom : <input type="text" name="nom" value="@Request["nom"]" /></p>
+        <p>Votre age : <input type="text" name="age" value="@Request["age"]" /></p>
+        <p><input type="submit" value="OK"></p>
+    </form>
+    <p>@Request.QueryString["message"]</p>
+</body>
+</html>

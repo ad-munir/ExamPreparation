@@ -1,0 +1,111 @@
+﻿@{
+    float[] taux = { 0.09198f, 0.10036f };
+    string[] devise;
+    var Emessage = "";
+    var EmessageTaux = "";
+    var EmessageMontant = "";
+
+    var Dmessage = "";
+    var DmessageTaux = "";
+    var DmessageMontant = "";
+
+    var messageErreur = "";
+
+    if (IsPost)
+    {
+        if (Request["devise"] != null && Request["dh"].IsFloat() && Request["dh"].AsFloat()>=0)
+        {
+            float dh = Request["dh"].AsFloat();
+            devise = Request["devise"].Split(',');
+            float res;
+
+            if(devise.Length == 1)
+            {
+                if (devise[0] == "Euro")
+                {
+                    res = dh * taux[0];
+                    Emessage = "Conversion du Dirham en Euro";
+                    EmessageTaux = "Taux de conversion : " + taux[0];
+                    EmessageMontant = "Montant en Euro : " + res;
+                }
+                if (devise[0] == "Dollar US")
+                {
+                    res = dh * taux[1];
+                    Dmessage = "Conversion du Dirham en Dollar US";
+                    DmessageTaux = "Taux de conversion : " + taux[1];
+                    DmessageMontant = "Montant en Dollar US : " + res;
+                }
+
+            }
+
+            if (devise.Length == 2)
+            {
+                if (devise[0] == "Euro")
+                {
+                    res = dh * taux[0];
+                    Emessage = "Conversion du Dirham en Euro";
+                    EmessageTaux = "Taux de conversion : " + taux[0];
+                    EmessageMontant = "Montant en Euro : " + res;
+                }
+
+
+                if (devise[1] == "Dollar US")
+                {
+                    res = dh * taux[1];
+                    Dmessage = "Conversion du Dirham en Dollar US";
+                    DmessageTaux = "Taux de conversion : " + taux[1];
+                    DmessageMontant = "Montant en Dollar US : " + res;
+                }
+            }
+        }
+        else
+        {
+            if (Request["dh"].IsEmpty())
+            {
+                messageErreur = "Veuillez saisir le montant à convertir!";
+            }
+            else if (!Request["dh"].IsFloat())
+            {
+                messageErreur = "Le montant saisi n'est pas un nombre valide";
+            }
+            else if(Request["dh"].AsFloat() < 0)
+            {
+                messageErreur = "Le montant doit etre un nombre >=0";
+            }
+            else if (Request["devise"].IsEmpty())
+            {
+                messageErreur = "Veuillez choisir une ou plusieurs des devises";
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examen2022 Ex1</title>
+</head>
+<body>
+    <fieldset style="width:300px">
+        <legend>Conversion Dirham devise</legend>
+        <form method="post">
+            Montant(Dh) : <br />
+            <input type="text" name="dh" value="@Request["dh"]" />
+            <br />
+            <input type="checkbox" name="devise" value="Euro" />Euro<br />
+            <input type="checkbox" name="devise" value="Dollar US" />Dollar US<br />
+            <br />
+            <input type="submit" value="Convertir" />
+        </form>
+    </fieldset>
+
+    <h2 style="color:red">@messageErreur</h2>
+    
+    <h2>@Emessage</h2>
+    <p>@EmessageTaux</p>
+    <p>@EmessageMontant</p>
+
+    <h2>@Dmessage</h2>
+    <p>@DmessageTaux</p>
+    <p>@DmessageMontant</p>
+</body>
+</html>

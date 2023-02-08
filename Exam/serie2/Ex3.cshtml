@@ -1,0 +1,57 @@
+﻿@{
+    var jour = "";
+    var message = "";
+    if (IsPost)
+    {
+        if (!Request["date"].IsEmpty())
+        {
+            if ( Request["date"].IsDateTime() )
+            {
+
+                //var date = DateTime.Parse(Request["date"]);
+                //message = "Votre jour de naissance : " + date.ToString("dddd");
+
+                jour = "Votre jour de naissance : " + Request["date"].AsDateTime().ToString("dddd");
+            }
+            else
+            {
+                message = "Erreur : la valeur saisiée ne représente pas une date";
+            }
+
+        }
+        else
+        {
+            message = "Erreur : Veuillez entrer la date";
+        }
+
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Serie2 Ex3</title>
+    <style>
+        form {
+            border: solid #eee 2px;
+            background-color: azure;
+            width: 300px;
+            padding: 10px
+        }
+    </style>
+</head>
+<body>
+    <h4>Entrer votre date de naissance pour obtenir votre jour de naissance.</h4>
+
+    <form method="post">
+        <h4>Date de naissance (jj/mm/aaaa):</h4>
+        <input width="200px" type="text" name="date" value="@Request["date"]" />
+        <br /><br />
+        <input width="100px" type="submit" value="Obtenir le jour" />
+    </form>
+    <p>@jour</p>
+    <p>@message</p>
+</body>
+</html>
+
+
+

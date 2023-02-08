@@ -1,0 +1,43 @@
+﻿@{
+    var message = "";
+
+    if (IsPost)
+    {
+        if (Request.Files[0].ContentLength != 0)
+        {
+            var FileName = Request.Files[0].FileName;
+            var dir = Path.GetFileName(Request.Files[0].FileName);
+            //var nom = Request.Files[0].ContentLength;
+
+            var contentLength = Request.Files[0].ContentLength;
+            var ContentType = Request.Files[0].ContentType;
+    
+            <p>nom(path)  @dir</p>
+            <p>FileName : @FileName</p>
+            <p> contentLength : @contentLength bytes</p>
+            <p>ContentType : @ContentType</p>
+
+            var uploadDir = Server.MapPath("~/serie3/" + FileName);
+            Request.Files[0].SaveAs(uploadDir);
+        }
+        else
+        {
+            message = "Veuilez choisir le fichier";
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form method="post" action="" enctype="multipart/form-data">
+        Choose file:
+        <input type="file" name="myFile" />
+        <br />
+        <input type="submit" value="upload" />
+    </form>
+    <p>@message</p>
+</body>
+</html>

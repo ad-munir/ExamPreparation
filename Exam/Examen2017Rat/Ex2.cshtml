@@ -1,0 +1,88 @@
+﻿@{ 
+    var largeur ="";
+    var hauteur ="";
+    var textColor = "";
+    var bgColor = "";
+    var text = "";
+    var messageLar = "";
+    var messageHau = "";
+    var message = "";
+
+    if (IsPost)
+    {
+        if (!Request["largeur"].IsEmpty() && !Request["hauteur"].IsEmpty() && !Request["textColor"].IsEmpty() && !Request["bgColor"].IsEmpty() && !Request["text"].IsEmpty())
+        {
+            largeur = Request["largeur"];
+            hauteur = Request["hauteur"];
+            textColor = Request["textColor"];
+            bgColor = Request["bgColor"];
+
+            if (largeur.AsInt() > 0 && hauteur.AsInt() > 0)
+            {
+                largeur = Request["largeur"] + "cm";
+                hauteur = Request["hauteur"] + "cm";
+                text = Request["text"];
+            }
+            else
+            {
+                if (largeur.AsInt() < 0)
+                {
+                    messageLar = "la largeur doit etre positive ou nulle";
+                }
+                if (hauteur.AsInt() < 0)
+                {
+                    messageHau = "la hauteur doit etre positive ou nulle";
+                }
+            }
+        }
+        else
+        {
+            message = "Veuillez remplir tous les champs";
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ex2</title>
+    <style>
+        input, select{
+            margin:10px auto;
+        }
+    </style>
+</head>
+<body>
+    <fieldset style="width:500px">
+        <legend>Création du rectangle</legend>
+        <form method="post">
+            Largeur : <input type="text" name="largeur" value="@Request["largeur"]" />cm
+            <br />
+            Hauteur  : <input type="text" name="hauteur" value="@Request["hauteur"]" />cm
+            <br />
+            Couleur de fond :
+            <select name="bgColor">
+                <option value="#00ff00" selected>Vert</option>
+                <option value="#ff0000">Rouge</option>
+            </select>
+
+            <br />
+            Couleur de texte :
+            <select name="textColor">
+                <option value="#000000" selected>Noir</option>
+                <option value="#0000ff">Bleu</option>
+            </select>
+            <br />
+            Texte à afficher : <input type="text" name="text" value="@text" />
+
+            <br />
+            <input type="submit" value="Créer" />
+        </form>
+    </fieldset>
+    <div style="background-color:@bgColor;color:@textColor;width:@largeur;height:@hauteur">
+        @text
+    </div>
+    <p>@messageLar</p>
+    <p>@messageHau</p>
+    <p>@message</p>
+</body>
+</html>

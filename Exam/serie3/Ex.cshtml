@@ -1,0 +1,66 @@
+﻿@{
+    var imagePath = "";
+    string[] sel = new string[7];
+    string[] photos = null;
+
+
+    if (IsPost)
+    {
+        if (Request["Choix"] != null)
+        {
+            photos = Request["Choix"].Split(',');
+
+            /*
+            imagePath = "~/Images/"+Request["Choix"];
+
+            for(var i=1 ; i<= sel.Length ; i++)
+            {
+                if (Request["Choix"] == "Photo"+i+".jpg")
+                {
+                    sel[i-1] = "selected";
+                }
+            }
+            */
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>serie3 Ex</title>
+</head>
+<body>
+    <h1>Affichage des images</h1>
+    <form method="post" action="" style="width: 40%">
+        <fieldset>
+            <legend>Photos à voir</legend>
+            <p>
+                Choisissez une photo pour l'afficher :
+                <select name="Choix" multiple>
+                    <option value="Photo1.jpg" @sel[0]>Photo 1</option>
+                    <option value="Photo2.jpg" @sel[1]>Photo 2</option>
+                    <option value="Photo3.jpg" @sel[2]>Photo 3</option>
+                    <option value="Photo4.jpg" @sel[3]>Photo 4</option>
+                    <option value="Photo5.jpg" @sel[4]>Photo 5</option>
+                    <option value="Photo6.jpg" @sel[5]>Photo 6</option>
+                    <option value="Photo7.jpg" @sel[6]>Photo 7</option>
+                </select>
+            </p>
+            <input type="submit" value="Afficher" />
+        </fieldset>
+    </form>
+
+    @{
+        if (photos != null)
+        {
+            foreach (var photo in photos)
+            {
+                imagePath = "~/Images/" + photo;
+                <img src="@Href(imagePath)" />
+            }
+            // <img src="@Href(imagePath)" />
+
+        }
+    }
+</body>
+</html>

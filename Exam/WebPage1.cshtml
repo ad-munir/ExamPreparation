@@ -1,0 +1,46 @@
+﻿@using WebMatrix.Data;
+
+@{
+    //la deuxieme methode
+    var db = Database.Open("MyDatabase");
+
+    //var db = Database.OpenConnectionString("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MyDatabase;Integrated Security=True;Pooling=False", "System.Data.SqlClient");
+    var selectQueryString = "SELECT * FROM  Client";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sql Server</title>
+
+    <style>
+        table, th, td {
+            border: solid 1px #bbbbbb;
+            border-collapse: collapse;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in db.Query(selectQueryString))
+            {
+                <tr>
+                    <td>@row.Id</td>
+                    <td>@row.name</td>
+                    <td>@row.lastName</td>
+                    <td>@row.phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

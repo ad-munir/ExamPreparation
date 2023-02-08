@@ -1,0 +1,57 @@
+﻿@{
+    var jour = "";   // Résultat qui sera affiché en bas du formulaire.
+    var message = "";   /* Message d’erreur associé au champ Date 					de naissance. */
+    if (IsPost)
+    {
+        if (!Request["date"].IsEmpty())
+        {
+            if (Request["date"].IsDateTime())
+            {
+                jour = "Votre jour de naissance est : " + Request["date"].AsDateTime().ToString("dddd");
+            }
+            else
+            {
+                message = @"La valeur saisie dans le champ ""Date  de naissance"" ne représente pas une date  valide";
+            }
+        }
+        else
+        {
+            message = @"Veuillez remplir votre date de naissance.";
+        }
+    }
+}  
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obtenir le jour de naissance à partir de la date de naissance</title>
+
+    <style type="text/css">
+        body {
+            background-color: beige;
+            font-family: Verdana, Arial;
+            margin: 50px;
+        }
+
+        form {
+            padding: 10px;
+            border-style: solid;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <p>Entrez votre date de naissance pour obtenir votre jour de naissance.</p>
+    <form action="" method="post">
+        <!-- Le script d'action est la page elle-même. -->
+        <p>
+            Date de naissance <br /> (jj/mm/aaaa) :
+            <input type="text" name="date" value="@Request["date"]" />
+        </p>
+        <p> <input type="submit" value="Obtenir le jour" /></p>
+    </form>
+    <p>@jour</p>
+    <p>@message</p>
+</body>
+</html>
